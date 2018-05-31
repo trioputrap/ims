@@ -11,8 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'DashboardController@index');
+
+Route::get('/pelanggan/tambah', 'PelangganController@create');
+Route::get('/pelanggan', 'PelangganController@index');
+Route::get('/pembayaran', 'PembayaranController@index');
+
+Route::get('/pembayaran/tambah', function () {
+    return view('pembayaran.view');
 });
 
 Auth::routes();
