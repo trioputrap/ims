@@ -1,5 +1,8 @@
 @extends('layouts.template')
 
+@section('page')
+    {{$page}}
+@endsection
 @section('content')
 <div class="row">
     <div class="col-lg-6">
