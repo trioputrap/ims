@@ -26,7 +26,8 @@ class PelangganController extends Controller
      */
     public function create()
     {
-        return view('pelanggan.form_add');
+        $page = "Pelanggan";
+        return view('pelanggan.form_add',compact('page'));
     }
 
     /**
@@ -39,7 +40,7 @@ class PelangganController extends Controller
     {
         $data = $request->all();
         Pelanggan::create($data);
-        
+        return redirect()->route('pelanggan.index')->with('success','Sukses menambah pelanggan!');
     }
 
     /**
@@ -61,7 +62,9 @@ class PelangganController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pelanggan = Pelanggan::find($id);
+        $page = "Pelanggan";
+        return view('pelanggan.form_edit',compact('page','pelanggan'));
     }
 
     /**
@@ -73,7 +76,15 @@ class PelangganController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $pelanggan = Pelanggan::find($id);
+        $pelanggan->nik = $request->nik;
+        $pelanggan->no_rek = $request->no_rek;
+        $pelanggan->nama = $request->nama;
+        $pelanggan->telp = $request->telp;
+        $pelanggan->alamat = $request->alamat;
+        $pelanggan->chat_id = $request->chat_id;
+        $pelanggan->save();
+        return redirect()->route('pelanggan.index')->with('success','Sukses mengedit pelanggan!');
     }
 
     /**
@@ -84,6 +95,7 @@ class PelangganController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Pelanggan::destroy($id);
+        return redirect()->route('pelanggan.index')->with('success','Sukses menghapus pelanggan!');
     }
 }

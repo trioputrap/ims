@@ -20,6 +20,11 @@
     <link href="{{asset('assets/css/lib/owl.theme.default.min.css')}}" rel="stylesheet" />
     <link href="{{asset('assets/css/helper.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
+    
+    <link href="{{asset('assets/css/lib/toastr/toastr.min.css')}}" rel="stylesheet">
+    <script src="{{asset('assets/js/lib/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('assets/js/lib/toastr/toastr.min.js')}}"></script>
+    <script src="{{asset('js/lib/toastr/toastr.init.js')}}"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
     <!--[if lt IE 9]>
@@ -134,7 +139,6 @@
     </div>
     <!-- End Wrapper -->
     <!-- All Jquery -->
-    <script src="{{asset('assets/js/lib/jquery/jquery.min.js')}}"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="{{asset('assets/js/lib/bootstrap/js/popper.min.js')}}"></script>
     <script src="{{asset('assets/js/lib/bootstrap/js/bootstrap.min.js')}}"></script>

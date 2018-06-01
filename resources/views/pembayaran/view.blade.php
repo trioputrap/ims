@@ -3,6 +3,31 @@
     {{$page}}
 @endsection
 @section('content')
+@if (session()->has('success'))
+<script>
+$( document ).ready(function(){
+  toastr.success("{{ session('success') }}", 'Pembayaran', {
+    timeOut: 5000,
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": true,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": true,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut",
+    "tapToDismiss": false
+
+  });
+});
+</script>
+@endif
 <div class="row">
     <div class="col-lg-12"> 
         <div class="card">
