@@ -19,20 +19,11 @@
                                 <th>Bulan</th>
                                 <th>Tahun</th>
                                 <th>Tagihan</th>
+                                <th>Bukti Trf</th>
                                 <th>Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th>#</th>
-                                <th>No Rekening</th>
-                                <th>Nama Pelanggan</th>
-                                <th>Bulan</th>
-                                <th>Tahun</th>
-                                <th>Tagihan</th>
-                                <th>Status</th>
-                            </tr>
-                        </tfoot>
                         <tbody>
                             @foreach($pembayarans as $no => $pembayaran)
                             <tr>
@@ -43,11 +34,20 @@
                                 <td>{{$pembayaran->tahun}}</td>
                                 <td>Rp{{number_format($pembayaran->jumlah_tagihan)}}</td>
                                 <td>
-                                @if($pembayaran->status_bayar)
+                                <img src="https://res.cloudinary.com/wahyupermadie/image/upload/{{$pembayaran->bukti_trf}}.jpg" style="width:150px !important; height: 150px !important">
+                                </td>
+                                <td>
+                                @if($pembayaran->flag == 'just_arrived')
+                                    <span class="badge badge-danger">Belum Bayar</span>
+                                @elseif($pembayaran->flag == 'processed')
+                                    <span class="badge badge-warning">Sedang Di Proses</span>
+                                @else 
                                     <span class="badge badge-success">Lunas</span>
-                                @else
-                                    <span class="badge badge-warning">Belum Bayar</span>
                                 @endif
+                                </td>
+                                <td>
+                                    <a href="" id="btnAccept" class="btn btn-success">Accept</a>
+                                    <a href="" id="btnDecline" class="btn btn-danger">Decline</a>
                                 </td>
                             </tr>
                             @endforeach
