@@ -30,3 +30,5 @@ Route::patch('/pembayaran/update/{id}', 'PembayaranController@update');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/get/pembayaran/all','PembayaranController@getAll');

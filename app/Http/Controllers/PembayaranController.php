@@ -131,4 +131,48 @@ class PembayaranController extends Controller
     {
         //
     }
+
+    
+
+    public function getAll(){
+        $pembayarans = Pembayaran::all();
+        $html = "";
+        foreach($pembayarans as $no => $pembayaran):
+            if($pembayaran->flag == 'just_arrived'):
+                $badge='<span class="badge badge-danger">Belum Bayar</span>';
+            elseif($pembayaran->flag == 'processed'):
+                $badge='<span class="badge badge-warning">Sedang Di Proses</span>';
+            elseif($pembayaran->flag == 'gagal'):
+                $badge='<span class="badge badge-primary">Gagal</span>';
+            else: 
+                $badge='<span class="badge badge-success">Lunas</span>';
+            endif;
+
+            
+            if($pembayaran->flag == 'completed'):
+                $action='<button class="btnAccept btn btn-primary">LUNAS</button>';
+            else:
+                $action='
+                <button id="btnAccept" dataId='.$pembayaran->id.' dataType="success" class="btnAccept btn btn-success">Accept</button>
+                <button id="btnDecline" dataId='.$pembayaran->id.' dataType="cancel" class="btnDecline btn btn-danger">Decline</button>
+                ';
+            endif;
+
+            $html.="
+            <tr>
+                <td>".($no+1)."</td>
+                <td>".$pembayaran->pelanggan->no_rek."</td>
+                <td>".$pembayaran->pelanggan->nama."</td>
+                <td>".\DateTime::createFromFormat('!m', $pembayaran->bulan)->format('F')."</td>
+                <td>".$pembayaran->tahun."</td>
+                <td>Rp".number_format($pembayaran->jumlah_tagihan)."</td>
+                <td>
+                <img src='https://res.cloudinary.com/wahyupermadie/image/upload/".$pembayaran->bukti_trf.".jpg' style='width:150px !important; height: 150px !important'>
+                </td>
+                <td>".$badge."</td>
+                <td>".$action."</td>
+            </tr>";
+        endforeach;
+        echo $html;
+    }
 }
