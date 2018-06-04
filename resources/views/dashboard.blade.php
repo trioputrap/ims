@@ -64,7 +64,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Data Pembayaran</h4>
-                <h6 class="card-subtitle">Data pembayaran bulan ini</h6>
+                <h6 class="card-subtitle">Data pembayaran bulan inis</h6>
                 <div class="table-responsive m-t-40">
                     <table id="myTable" class="table table-bordered table-striped">
                         <thead>
@@ -99,10 +99,14 @@
                                 <td>{{$pembayaran->tahun}}</td>
                                 <td>Rp{{number_format($pembayaran->jumlah_tagihan)}}</td>
                                 <td>
-                                @if($pembayaran->status_bayar)
+                                @if($pembayaran->flag == 'just_arrived')
+                                    <span class="badge badge-danger">Belum Bayar</span>
+                                @elseif($pembayaran->flag == 'processed')
+                                    <span class="badge badge-warning">Sedang Di Proses</span>
+                                @elseif($pembayaran->flag == 'gagal')
+                                    <span class="badge badge-primary">Gagal</span>
+                                @else 
                                     <span class="badge badge-success">Lunas</span>
-                                @else
-                                    <span class="badge badge-warning">Belum Bayar</span>
                                 @endif
                                 </td>
                             </tr>
@@ -115,10 +119,10 @@
     </div>
 </div>
 <script>
-function refreshTable(){
+    function refreshTable(){
         setTimeout(function(){
             $.ajax({
-                url: "{{url('get/pembayaran/all')}}",
+                url: "{{url('get/dashboard/all')}}",
             }).done(function(data) {
                 $("#tableBody").html(data);
                 refreshTable();

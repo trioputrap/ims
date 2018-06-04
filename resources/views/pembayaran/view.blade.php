@@ -90,8 +90,6 @@ $( document ).ready(function(){
     </div>
 </div>
 <script>
-    
-
     function refreshTable(){
         setTimeout(function(){
             $.ajax({
@@ -149,6 +147,7 @@ $( document ).ready(function(){
     }
 
     $(document).ready(function(){
+        setListener();
         refreshTable();
     });
 </script>
