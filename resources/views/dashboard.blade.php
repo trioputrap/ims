@@ -89,7 +89,7 @@
                                 <th>Status</th>
                             </tr>
                         </tfoot>
-                        <tbody>
+                        <tbody id="tableBody">
                             @foreach($pembayarans as $no => $pembayaran)
                             <tr>
                                 <td>{{$no+1}}</td>
@@ -114,4 +114,21 @@
         </div>
     </div>
 </div>
+<script>
+function refreshTable(){
+        setTimeout(function(){
+            $.ajax({
+                url: "{{url('get/pembayaran/all')}}",
+            }).done(function(data) {
+                $("#tableBody").html(data);
+                refreshTable();
+            });
+        },
+        1000);
+    }
+
+    $(document).ready(function(){
+        refreshTable();
+    });
+</script>
 @endsection

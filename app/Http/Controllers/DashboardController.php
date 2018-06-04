@@ -24,4 +24,12 @@ class DashboardController extends Controller
         $page = "Pembayaran";
         return view('dashboard', compact('page','pembayarans','total_tagihan','total_bayar','total_pelanggan','total_bot'));
     }
+
+    public function getAll(){
+        $pembayarans = Pembayaran::where('bulan', date('m'))
+        ->orWhere('flag','just_arrived')
+        ->orWhere('flag','gagal')
+        ->orWhere('flag','processed')
+        ->get();
+    }
 }

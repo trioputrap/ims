@@ -90,46 +90,7 @@ $( document ).ready(function(){
     </div>
 </div>
 <script>
-    $(".btnAccept").on('click',function(e){
-        var id = $(this).attr("dataId")
-        var url = "{{url('pembayaran/update')}}"+"/"+id
-        var dataType = $(this).attr("dataType")
-        // alert(dataType)
-        $.ajax({
-            headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type:'PATCH',
-            url:"{{url('pembayaran/update')}}"+"/"+id,
-            data:{jenis:dataType},
-            success: function(data){
-                console.log(data)
-            },
-            error: function(xhr, status, error) {
-                
-            }
-        })
-    })
-    $(".btnDecline").on('click',function(e){
-        var id = $(this).attr("dataId")
-        var url = "{{url('pembayaran/update')}}"+"/"+id
-        var dataType = $(this).attr("dataType")
-        // alert(dataType)
-        $.ajax({
-            headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type:'PATCH',
-            url:"{{url('pembayaran/update')}}"+"/"+id,
-            data:{jenis:dataType},
-            success: function(data){
-                console.log(data)
-            },
-            error: function(xhr, status, error) {
-                
-            }
-        })
-    })
+    
 
     function refreshTable(){
         setTimeout(function(){
@@ -138,9 +99,53 @@ $( document ).ready(function(){
             }).done(function(data) {
                 $("#tableBody").html(data);
                 refreshTable();
+                setListener();
             });
         },
         1000);
+    }
+
+    function setListener(){
+        $(".btnAccept").on('click',function(e){
+            var id = $(this).attr("dataId")
+            var url = "{{url('pembayaran/update')}}"+"/"+id
+            var dataType = $(this).attr("dataType")
+            // alert(dataType)
+            $.ajax({
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type:'PATCH',
+                url:"{{url('pembayaran/update')}}"+"/"+id,
+                data:{jenis:dataType},
+                success: function(data){
+                    console.log(data)
+                },
+                error: function(xhr, status, error) {
+                    
+                }
+            })
+        })
+        $(".btnDecline").on('click',function(e){
+            var id = $(this).attr("dataId")
+            var url = "{{url('pembayaran/update')}}"+"/"+id
+            var dataType = $(this).attr("dataType")
+            // alert(dataType)
+            $.ajax({
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type:'PATCH',
+                url:"{{url('pembayaran/update')}}"+"/"+id,
+                data:{jenis:dataType},
+                success: function(data){
+                    console.log(data)
+                },
+                error: function(xhr, status, error) {
+                    
+                }
+            })
+        })
     }
 
     $(document).ready(function(){
