@@ -25,6 +25,7 @@
     <script src="{{asset('assets/js/lib/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('assets/js/lib/toastr/toastr.min.js')}}"></script>
     <script src="{{asset('js/lib/toastr/toastr.init.js')}}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
     <!--[if lt IE 9]>

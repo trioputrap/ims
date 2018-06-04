@@ -66,13 +66,19 @@ $( document ).ready(function(){
                                     <span class="badge badge-danger">Belum Bayar</span>
                                 @elseif($pembayaran->flag == 'processed')
                                     <span class="badge badge-warning">Sedang Di Proses</span>
+                                @elseif($pembayaran->flag == 'gagal')
+                                    <span class="badge badge-primary">Gagal</span>
                                 @else 
                                     <span class="badge badge-success">Lunas</span>
                                 @endif
                                 </td>
                                 <td>
-                                    <a href="" id="btnAccept" class="btn btn-success">Accept</a>
-                                    <a href="" id="btnDecline" class="btn btn-danger">Decline</a>
+                                    @if($pembayaran->flag == 'completed')
+                                        <button class="btnAccept btn btn-primary">LUNAS</button>
+                                    @else
+                                        <button id="btnAccept" dataId={{$pembayaran->id}} dataType="success" class="btnAccept btn btn-success">Accept</button>
+                                        <button id="btnDecline" dataId={{$pembayaran->id}} dataType="cancel" class="btnDecline btn btn-danger">Decline</button>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
@@ -83,4 +89,46 @@ $( document ).ready(function(){
         </div>
     </div>
 </div>
+<script>
+    $(".btnAccept").on('click',function(e){
+        var id = $(this).attr("dataId")
+        var url = "{{url('pembayaran/update')}}"+"/"+id
+        var dataType = $(this).attr("dataType")
+        // alert(dataType)
+        $.ajax({
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type:'PATCH',
+            url:"{{url('pembayaran/update')}}"+"/"+id,
+            data:{jenis:dataType},
+            success: function(data){
+                console.log(data)
+            },
+            error: function(xhr, status, error) {
+                
+            }
+        })
+    })
+    $(".btnDecline").on('click',function(e){
+        var id = $(this).attr("dataId")
+        var url = "{{url('pembayaran/update')}}"+"/"+id
+        var dataType = $(this).attr("dataType")
+        // alert(dataType)
+        $.ajax({
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type:'PATCH',
+            url:"{{url('pembayaran/update')}}"+"/"+id,
+            data:{jenis:dataType},
+            success: function(data){
+                console.log(data)
+            },
+            error: function(xhr, status, error) {
+                
+            }
+        })
+    })
+</script>
 @endsection

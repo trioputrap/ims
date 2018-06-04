@@ -22,7 +22,9 @@ class PembayaranController extends Controller
 
     public function getYear($pelanggan_id){
         $tahun = Pembayaran::where('pelanggan_id',$pelanggan_id)
-                ->where('status_bayar',0)
+                ->where('flag','just_arrived')
+                ->orWhere('flag','gagal')
+                ->orWhere('flag','processed')
                 ->groupBy('tahun')
                 ->pluck('tahun');
         echo $tahun->toJSON();
@@ -31,7 +33,9 @@ class PembayaranController extends Controller
     public function getMonth($pelanggan_id, $tahun){
         $bulans = Pembayaran::where('pelanggan_id',$pelanggan_id)
                 ->where('tahun',$tahun)
-                ->where('status_bayar',0)
+                ->where('flag','just_arrived')
+                ->orWhere('flag','gagal')
+                ->orWhere('flag','processed')
                 ->groupBy('bulan')->pluck('bulan');
         echo $bulans->toJSON();
     }
@@ -40,7 +44,9 @@ class PembayaranController extends Controller
         $total = Pembayaran::where('pelanggan_id',$pelanggan_id)
                 ->where('tahun',$tahun)
                 ->where('bulan',$bulan)
-                ->where('status_bayar',0)
+                ->where('flag','just_arrived')
+                ->orWhere('flag','gagal')
+                ->orWhere('flag','processed')
                 ->select('id', 'jumlah_tagihan')->get();
         echo $total->toJSON();
     }
@@ -99,10 +105,20 @@ class PembayaranController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $pembayaran = Pembayaran::find($id);
-        $pembayaran->status_bayar = 1;
-        $pembayaran->save();
-        return redirect()->route('pembayaran.index')->with('success','Sukses melakukan pembayaran!');
+        $data = $request->all();
+        if($data['jenis'] === 'success')
+        {
+            $pembayaran = Pembayaran::find($id);
+            $pembayaran->flag = "completed";
+            $pembayaran->save();
+            return response()->json(['success'=>'berhasil']);
+        }else{
+            $pembayaran = Pembayaran::find($id);
+            $pembayaran->flag = "gagal";
+            $pembayaran->save();
+            return response()->json(['success'=>'berhasil']);
+        }
+        
     }
 
     /**
